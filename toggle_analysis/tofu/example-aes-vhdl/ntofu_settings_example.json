@@ -1,0 +1,17 @@
+{
+    "vcdGlob": "vcd/aes*.vcd",
+    "signalsFileNameLiterals": null,
+    "signalsFileNameLiterals_comment": "ntofu_filtered_signals.json",
+    "leakageModel": "HammingWeight",
+    "window": false,
+    "windowFrom": null,
+    "windowTo": null,
+    "valueExtractFunction": "valueExtract",
+    "valueExtractFile": "ntofu_values_to_extract.val",
+    "writeTraces": true,
+    "writeTracesBatchSize": 100,
+    "traceFileName": "traces.h5",
+    "align": false,
+    "downsample": 1,
+    "format": "lascar"
+}

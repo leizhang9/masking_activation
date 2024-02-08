@@ -1,0 +1,6 @@
+
+f = h5py.File('/home/ge36cig/Desktop/ma_zhang_masking_activation_functions_for_nns/project_lut/tmp/vcd/traces.h5', "r")
+
+python3 extractsignalids.py -s /home/ge36cig/Desktop/ma_zhang_masking_activation_functions_for_nns/project_lut/tmp/vcd/settings.json
+
+python3 ttest.py -i /media/ge36cig/7585AD1A4660599C/ma_zhang_masking_activation_functions_for_nns/project_lut/tmp/vcd/traces.h5 -p 2 --seg-size 4000
