@@ -17,8 +17,6 @@
 -- Additional Comments:
 -- 
 ----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
@@ -35,7 +33,7 @@ use work.my_package.all;
 --use UNISIM.VComponents.all;
 
 entity lut is
---  Port ( );
+    generic (lut_size : integer);
     port(
         index: in std_logic_vector(K-1 downto 0);
         output: out std_logic_vector(K-1 downto 0));
@@ -46,6 +44,7 @@ architecture Behavioral of lut is
 begin
     process(index)
     begin
+--        if lut_size = 256 then
         case index is
             when "00000000" => output <= "00000000";
             when "00000001" => output <= "00000001";
@@ -305,6 +304,8 @@ begin
             when "11111111" => output <= "11111111";
             when others => output <= (others => '0'); -- Default case
         end case;
+--        elsif lut_size = 128 then
+            
     end process;
     
 end Behavioral;

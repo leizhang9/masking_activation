@@ -23,8 +23,10 @@ use IEEE.std_logic_arith.all;
 use IEEE.std_logic_unsigned.all;
 package my_package is
   constant K: integer := 8;  --data width
-  constant prime: integer := 251; --size of Galois field, prime number between 0 and 2^K
-  constant M: std_logic_vector(K-1 downto 0) := conv_std_logic_vector(prime, K);
+  constant my_size: integer := 64; 
+  --modulo parameter, number between 0 and 2^K
+  --32, 64, 128, 256
+  constant M: std_logic_vector(K-1 downto 0) := conv_std_logic_vector(my_size, K);
 end my_package;
 
 

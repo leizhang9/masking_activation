@@ -17,8 +17,6 @@
 -- Additional Comments:
 -- 
 ----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
@@ -33,8 +31,10 @@ use work.my_package.all;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
+-------for dump
+-----------------------------------------
+-----------------------------------------
 entity masked_lut is
---  Port ( );
     port(
         x: in std_logic_vector(K-1 downto 0); --x
         clk: in std_logic;
@@ -43,22 +43,61 @@ entity masked_lut is
         output: out std_logic_vector(K-1 downto 0));
 end masked_lut;
 
-architecture Behavioral of masked_lut is
-    component adder_subtractor 
-    port (
-        x, y: in std_logic_vector(K-1 downto 0);
-        addb_sub: in std_logic;
-        z: out std_logic_vector(K-1 downto 0)
-        );
-    end component;
+architecture dump of masked_lut is
     
     component lut_prime
+    generic(lut_size : integer);
     port(
+        clk: in std_logic;
         x1: in std_logic_vector(K-1 downto 0);
         x0: in std_logic_vector(K-1 downto 0);
         z: out std_logic_vector(K-1 downto 0)
         );
     end component;
+   
+    
+    signal x1: std_logic_vector(K-1 downto 0);
+    signal lut_prime_x1: std_logic_vector(K-1 downto 0);
+begin
+   
+x1 <= std_logic_vector(to_unsigned((to_integer(unsigned(x)) - to_integer(unsigned(rnd))) mod my_size, 8));
+    
+    lut_prime_1: lut_prime generic map(lut_size => my_size)
+        port map (
+        clk => clk,
+        x1 => x1,
+        x0 => rnd,   --for tcl
+        z => lut_prime_x1
+    );
+    
+    output <= std_logic_vector(signed(lut_prime_x1) + signed(rnd));
+    
+end dump;
+
+
+
+------for behavioral simulation
+------------------------------------------
+------------------------------------------
+--entity masked_lut is
+--    port(
+--        x: in std_logic_vector(K-1 downto 0); --x
+--        clk: in std_logic;
+--        reset: in std_logic;
+--        output: out std_logic_vector(K-1 downto 0));
+--end masked_lut;
+
+--architecture Behavioral of masked_lut is
+    
+--    component lut_prime
+--    generic(lut_size : integer);
+--    port(
+--        clk: in std_logic;
+--        x1: in std_logic_vector(K-1 downto 0);
+--        x0: in std_logic_vector(K-1 downto 0);
+--        z: out std_logic_vector(K-1 downto 0)
+--        );
+--    end component;
     
 --    component random_generator
 --    port (
@@ -68,17 +107,12 @@ architecture Behavioral of masked_lut is
 --    );
 --    end component;
     
-    signal x1: std_logic_vector(K-1 downto 0);
+--    signal x1: std_logic_vector(K-1 downto 0);
 --    signal x0: std_logic_vector(K-1 downto 0);
-    signal lut_prime_x1: std_logic_vector(K-1 downto 0);
+--    signal lut_prime_x1: std_logic_vector(K-1 downto 0);
+--begin
 
-begin
-    modulo_subtractor_1: adder_subtractor port map (
-        x => x,
-        y => rnd, --for tcl
-        addb_sub => '1',
-        z => x1
-    ); 
+--    x1 <= std_logic_vector(to_unsigned((to_integer(unsigned(x)) - to_integer(unsigned(x0))) mod my_size, 8));
     
 --    random_generator_1: random_generator port map (
 --        clk => clk,
@@ -86,12 +120,15 @@ begin
 --        rnd_out => x0
 --    );
      
-    lut_prime_1: lut_prime port map (
-        x1 => x1,
-        x0 => rnd,   --for tcl
-        z => lut_prime_x1
-    );
+--    lut_prime_1: lut_prime generic map(lut_size => my_size)   --lut_size
+--        port map (
+--        clk => clk,
+--        x1 => x1,
+--        x0 => x0,
+--        z => lut_prime_x1
+--    );
     
-    output <= std_logic_vector(signed(lut_prime_x1) + signed(rnd));
+--    output <= std_logic_vector(to_signed(to_integer(signed(lut_prime_x1)) + to_integer(signed(x0)), 8));
     
-end Behavioral;
+--end Behavioral;
+

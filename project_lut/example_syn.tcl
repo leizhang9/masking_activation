@@ -1,7 +1,6 @@
 set project "/home/ge36cig/Desktop/ma_zhang_masking_activation_functions_for_nns/project_lut/project_lut.xpr"
 set tracked_module "/masked_lut_tb/dut/*"
-# vcd_dir need to be changed
-set vcd_dir "/tmp/vcd/64"  
+set vcd_dir "/tmp/vcd_syn_sequential/32"
 set num_traces 1000
 set input_file "input.txt"
 set tb_name masked_lut_tb
@@ -16,7 +15,7 @@ set_property top_lib xil_defaultlib [get_filesets sim_1]
 update_compile_order -fileset sim_1
 
 # start simulator
-launch_simulation -mode behavioral
+launch_simulation -mode post-synthesis -type timing
 #post-synthesis -type timing
 set offset 0
 

@@ -1,0 +1,10 @@
+{
+"include" : [
+    "module masked_lut_tb->module dut"
+    
+],
+"exclude" : [
+    "module masked_lut_tb->module dut->x"
+    
+]
+}

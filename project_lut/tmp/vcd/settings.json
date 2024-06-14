@@ -1,0 +1,18 @@
+{
+    "vcdGlob": "dump_*[0-999].vcd",
+    "pickleGlob": "dump_*[0-999].pickle",
+    "signalsFileNameLiterals": "signals_name.json",
+    "signalsFileName": "signals.json",
+    "signalPropertiesFile": "signal_properties.pickle",
+    "leakageModel": "HammingDistance",
+    "window": false,
+    "windowFrom": null,
+    "windowTo": null,
+    "valueExtractFunction": "valueExtractIndex",
+    "writeTraces": true,
+    "writeTracesBatchSize": 1,
+    "traceFileName": "traces.h5",
+    "align": true,
+    "downsample": 1,
+    "format": "lascar"
+}
