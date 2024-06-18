@@ -1,0 +1,126 @@
+{
+	"target":{
+		"board": "Smart Card Emulator",
+		"chip": "Atmega 664V",
+		"fclk [Hz]": 10e3,
+		"description": "RSA decryption (lasts 13.96ms), Shunt C",
+		"binary" : ""
+	},
+	"msmt": {
+		"number of traces": 1,
+		"repetitions": 20,
+		"delay [s]": 0.001,
+		"number of dummy traces": 0,
+		"dummy time [s]": 0
+	},
+	"scope": {
+		"type": "PicoScope 6402D",
+		"sampling": {
+			"sampling rate [S/s]": 156.25e6,
+			"sampling duration [s]": 20e-3
+		},
+		"channel1": {
+			"channel": 1,
+			"range [V]": 50e-3,
+			"coupling": "DC",
+			"BWLimited": true,
+			"enable": true,
+			"probe": "TA150",
+			"amplifier": "None",
+			"position": "JP9 hook",
+			"offset [V]": -450e-3
+		},
+		"channel4": {
+			"channel": 3,
+			"range [V]": 500e-3,
+			"coupling": "DC",
+			"BWLimited": true,
+			"enable": false,
+			"probe": "10:1 probe",
+			"amplifier": "None",
+			"position": "JP5 hook"
+		},
+		"trigger": {
+			"channel": 3,
+			"range [V]": 500e-3,
+			"coupling": "DC",
+			"enable": true,
+			"threshold [V]": 0.1,
+			"direction": "Rising",
+			"timeout [s]": 10,
+			"delay [s]": -1e-3
+		},
+		"clock": {
+			"use_external": false,
+			"external clock frequency": 10e6,
+			"external clock threshold [V]": 100e-3
+		}
+	},
+	"table":{
+	},
+	"HDF5": {
+		"output_file": "/tmp/traces.hdf5",
+		"output_file_addtimestring": false,
+		"store_for_all_repetitions": false,
+		"datasets": {
+			"N": {
+				"datatype": "uint32",
+				"dim": 1,
+				"create": true
+			},
+			"d": {
+				"datatype": "uint32",
+				"dim": 1,
+				"create": true
+			},
+			"e": {
+				"datatype": "uint8",
+				"dim": 1,
+				"create": true
+			},
+			"m": {
+				"datatype": "uint32",
+				"dim": 1,
+				"create": true
+			},
+			"S": {
+				"datatype": "uint32",
+				"dim": 1,
+				"create": true
+			},
+			"samples":{
+				"datatype": "uint8",
+				"dim": null,
+				"create": true,
+				"record channel": 1
+			},
+			"samples_trigger":{
+				"datatype": "uint8",
+				"dim": null,
+				"create": false,
+				"record channel": 4
+			}
+		},
+		"saving": {
+			"input_data":{
+			},
+			"trigger_data":{
+				"0": "N",
+				"1": "e",
+				"2": "d",
+				"3": "m",
+				"4": "S"
+			},
+			"output_data":{
+			}
+
+		}
+	},
+	"logging": {
+		"level": "debug",
+		"file": "",
+		"logformat": "[%(module)30s]  %(levelname)10s \t %(asctime)s: %(message)s"		
+	},
+	"experiment": {
+	}
+}

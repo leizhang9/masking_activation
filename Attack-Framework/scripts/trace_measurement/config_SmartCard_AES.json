@@ -1,0 +1,112 @@
+{
+	"target":{
+		"board": "Smart Card Emulator",
+		"chip": "Atmega 664V",
+		"fclk [Hz]": 10e3,
+		"description": "AES decryption",
+		"binary" : "./aes.hex"
+	},
+	"msmt": {
+		"number of traces": 1e1,
+		"repetitions": 1,
+		"delay [s]": 0.001,
+		"number of dummy traces": 0,
+		"dummy time [s]": 0
+	},
+	"scope": {
+		"type": "PicoScope 6402D",
+		"sampling": {
+			"sampling rate [S/s]": 156.25e6,
+			"sampling duration [s]": 50e-6
+		},
+		"channel1": {
+			"channel": 0,
+			"range [V]": 100e-3,
+			"coupling": "DC",
+			"BWLimited": true,
+			"enable": true,
+			"probe": "TA150",
+			"amplifier": "None",
+			"position": "JP9 hook"
+		},
+		"channel4": {
+			"channel": 3,
+			"range [V]": 500e-3,
+			"coupling": "DC",
+			"BWLimited": true,
+			"enable": false,
+			"probe": "",
+			"amplifier": "None",
+			"position": ""
+		},
+		"trigger": {
+			"channel": 3,
+			"range [V]": 500e-3,
+			"coupling": "DC",
+			"enable": true,
+			"threshold [V]": 0.1,
+			"direction": "Rising",
+			"timeout [s]": 10,
+			"delay [s]": 0
+		},
+		"clock": {
+			"use_external": false,
+			"external clock frequency": 10e6,
+			"external clock threshold [V]": 100e-3
+		}
+	},
+	"table":{
+	},
+	"HDF5": {
+		"output_file": "/tmp/test.hdf5",
+		"output_file_addtimestring": true,
+		"store_for_all_repetitions": false,
+		"datasets": {
+			"ptxt": {
+				"datatype": "uint8",
+				"dim": 16,
+				"create": true
+			},
+			"ctxt": {
+				"datatype": "uint8",
+				"dim": 16,
+				"create": true
+			},
+			"k": {
+				"datatype": "uint8",
+				"dim": 16,
+				"create": true
+			},
+			"samples":{
+				"datatype": "uint8",
+				"dim": null,
+				"create": true,
+				"record channel": 1
+			},
+			"samples_trigger":{
+				"datatype": "uint8",
+				"dim": null,
+				"create": false,
+				"record channel": 4
+			}
+		},
+		"saving": {
+			"input_data":{
+			},
+			"trigger_data":{
+				"0": "ptxt",
+				"1": "ctxt"
+			},
+			"output_data":{
+			}
+
+		}
+	},
+	"logging": {
+		"level": "debug",
+		"file": "",
+		"logformat": "[%(module)30s]  %(levelname)10s \t %(asctime)s: %(message)s"		
+	},
+	"experiment": {
+	}
+}

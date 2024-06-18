@@ -1,0 +1,125 @@
+{
+	"target":{
+		"board": "CW305",
+		"chip": "Artix 7",
+		"fclk [Hz]": 100e6,
+		"uart port": "/dev/ttyUSB0",
+		"uart baudrate [Baud]": 11520,
+		"uart bytesize": 8,
+		"uart parity": "E",
+		"uart stopbits": 1,
+		"description": "CW305 template",
+		"binary" : "/path/template.bit"
+	},
+	"msmt": {
+		"number of traces": 10,
+		"repetitions": 1,
+		"delay [s]": 0.01
+	},
+	"scope": {
+		"type": "PicoScope 6402D",
+		"url": "",
+		"sampling": {
+			"sampling rate [S/s]": 2.5e9,
+			"sampling duration [s]": 10e-6
+		},
+		"channel1": {
+			"channel": 0,
+			"range [V]": 100e-3,
+			"coupling": "DC",
+			"BWLimited": true,
+			"enable": false,
+			"probe": "",
+			"amplifier": "",
+			"position": ""
+		},
+		"channel2": {
+			"channel": 1,
+			"range [V]": 100e-3,
+			"coupling": "DC",
+			"BWLimited": true,
+			"enable": false,
+			"probe": "",
+			"amplifier": "",
+			"position": ""
+		},
+		"channel3": {
+			"channel": 2,
+			"range [V]": 500e-3,
+			"coupling": "DC",
+			"BWLimited": true,
+			"enable": false,
+			"probe": "",
+			"amplifier": "",
+			"position": ""
+		},
+		"channel4": {
+			"channel": 3,
+			"range [V]": 500e-3,
+			"coupling": "DC",
+			"BWLimited": true,
+			"enable": true,
+			"probe": "",
+			"amplifier": "",
+			"position": ""
+		},
+		"trigger": {
+			"channel": 3,
+			"range [V]": 500e-3,
+			"coupling": "DC",
+			"enable": true,
+			"threshold [V]": 0.1,
+			"direction": "Rising",
+			"timeout [s]": 10,
+			"delay [s]": 0
+		},
+		"clock": {
+			"use_external": false,
+			"external clock frequency": 10e6,
+            "external clock threshold [V]": 100e-3
+		}
+	},
+	"table": {
+		"xOrigin [mm]": 0,
+		"xLen [mm]": 0,
+		"yOrigin [mm]": 0,
+		"yLen [mm]": 0,
+		"zOrigin [mm]": 0,
+		"resolution [mm]": 0
+	},
+	"HDF5": {
+		"output_file": "/tmp/measurement.hdf5",
+		"output_file_addtimestring": true,
+		"store_for_all_repetitions": false,
+		"datasets": {
+			"samples":{
+				"datatype": "uint8",
+				"dim": null,
+				"create": true,
+				"record channel": 1
+			},
+			"samples_trigger":{
+				"datatype": "uint8",
+				"dim": null,
+				"create": false,
+				"record channel": 4
+			}
+		},
+		"saving": {
+			"input_data":{
+			},
+			"trigger_data":{
+			},
+			"output_data":{
+			}
+
+		}
+	},
+	"logging": {
+		"level": "info",
+		"file": "",
+		"logformat": "[%(module)30s]  %(levelname)10s \t %(asctime)s: %(message)s"
+	},
+	"experiment": {
+	}
+}

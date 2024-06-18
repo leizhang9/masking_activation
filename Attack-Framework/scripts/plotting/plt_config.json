@@ -1,0 +1,23 @@
+{
+    "font.family": "Liberation Serif",
+    "font.size" : 14,
+    "legend.title_fontsize" : 12,
+    "legend.fontsize" : 11,
+    "legend.framealpha": 1,
+    "legend.shadow": false,
+    "legend.fancybox": false,
+    "legend.borderaxespad": 0,
+    "legend.loc": "best",
+    "axes.titlesize" : 14,
+    "axes.labelsize" : 14,
+    "xtick.labelsize" : 10,
+    "ytick.labelsize": 10,
+    "lines.linewidth" : 0.5,
+    "text.usetex": true,
+    "pgf.rcfonts": false,
+    "figure.figsize": [6.4, 4.8],
+    "figure.dpi": 300,
+    "figure.constrained_layout.use" : true,
+    "savefig.bbox": "tight",
+    "savefig.format": "pdf"
+}

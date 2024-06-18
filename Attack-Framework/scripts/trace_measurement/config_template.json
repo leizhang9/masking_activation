@@ -1,0 +1,205 @@
+{
+	"target":{
+		"board": "CW308", # the board that is used
+		"chip": "STMF4", # the chip that is mounted on the board (actual DUT)
+		"fclk [Hz]": 10e3, # clock frequency of the target,
+		# description of the UART parameters,
+		# if you use another communication interface, you could either use these entries with a different purpose (#lifehack),
+		# or define entries that suit your need (e.g. 'spi', etc.)
+		"uart port": "/dev/ttyUSB0",
+		"uart baudrate [Baud]": 115200,
+		"uart bytesize": 8,
+		"uart parity": "N",
+		"uart stopbits": 1,
+		"description": "Key transfer", # A meaningful description of the experiment you want to do. Imagine you try to explain to your future self what was done. ;)
+		# path to the binary file that contains the implementation. can be used to write it to the target (in the
+		"binary" : "./STM32F215RG.elf"
+	},
+	"msmt": {
+		"number of traces": 1e1, # number of measurements/traces
+		"repetitions": 1, # number of repeitions for e.g. the same input data (for averaging or PUF use cases)
+		"delay [s]": 0.001, # artiticial delay in between measurements to allow the scope to rearm the trigger. Depends also on the duration of your DUT implementation
+		# in order to avoid transitional behavior (temperature drift DUT heating, transitional behavior of ADCs, ...),
+		# at the beginning of a measurement campaign, dummy measurement for which the data is not stored can be taken
+		"number of dummy traces": 0, # define a number of measurements
+		"dummy time [s]": 0 # alternatively define a duration for which measurements are taken
+	},
+	"scope": {
+		"type": "PicoScope 6402C", # currently supported - 'PicoScope 6*' (colynn Oflynn) / 'Keysight 254A'
+		"url": "TCPIP::192.168.56.20::inst0::INSTR", # only needed for the network scope (Keysight 254A)
+		"sampling": {
+			# sampling rate of the scope. ATTENTION, scopes do not support arbitrary sampling frequency,
+			# i.e. value may be adapted by scope to fit available values
+			"sampling rate [S/s]": 1.25e9,
+			# duration of the acquired measurement. gives the number of samples together with sampling rate (rounding may occur),
+		    # use in conjunction with trigger delay to measure, e.g. before the trigger edge
+			"sampling duration [s]": 3e-6
+		},
+	    # definition of the channel properties. You only need to include the channels that are used, i.e. where enable is set to true,
+		"channel1": {
+			"channel": 0, # NOTE that internal number of the channel starts at '0' while 'channel1' is the first channel
+			"range [V]": 100e-3, # dynamic range of the measurements. Depending on the scope this is either absolute maximum (PiscoScope) or peak-to-peak (Keysight)
+			"coupling": "DC", # coupling 'DC/'AC''. Besides, also 'DC50' is available
+			"BWLimited": false, # PicoScope supports 20MHz LP-Filter, useful for power measurements
+			"enable": true, # activate the channel. NOTE that you have to assign the channel to a dataset below if you want to store the data!
+			"probe": "Langer EMV RF-U 2,5-2", # define the probe used for acquisition (ideally also include the serial number of Langer probes)
+			"amplifier": "Langer EMV PA303 [30dB]", # if used, describe the amplifier (db, type, ideally serial number)
+			"position": "Measurement at shunt R3", # measurement position, e.g. for power which shunt was used, for gloabel EM on which PIN/capacitor/part of the chip the probe was placed
+			"offset [V]": 0.0 # DC offset if you need one. NOTE that there are DC blocks available in the lab, which filter out any DC offset. So using hardware is an alternative here. ;)
+		},
+		"channel2": {
+			"channel": 1,
+			"range [V]": 200e-3,
+			"coupling": "DC",
+			"BWLimited": true,
+			"enable": false,
+			"probe": "power with DC filter",
+			"amplifier": "None",
+			"position": "Shunt provided by CW308",
+			"offset [V]": 0.0
+		},
+		"channel3": {
+			"channel": 2,
+			"range [V]": 5,
+			"coupling": "DC",
+			"BWLimited": true,
+			"enable": false,
+			"probe": "",
+			"amplifier": "None",
+			"position": "",
+			"offset [V]": 0.0
+		},
+		"channel4": {
+			"channel": 3,
+			"range [V]": 5,
+			"coupling": "DC",
+			"BWLimited": true,
+			"enable": false,
+			"probe": "",
+			"amplifier": "None",
+			"position": "",
+			"offset [V]": 0.0
+		},
+		# definition of the trigger
+		"trigger": {
+			"channel": 3, # channel where trigger is presented
+			"range [V]": 500e-3, # voltage range of the channel, c.f. above
+			"coupling": "DC", # c.f. above
+			"enable": true, # c.f. above
+			"threshold [V]": 0.1, # treshold at which the trigger is raised
+			"direction": "Rising", # direction 'Rising'/'Falling'
+			"timeout [s]": 10, # Time out after which the trigger is automatically raised (to avoid getting stuck),
+			# delay at which the capture of the measurements start with respect to the edge.,
+			# Negative values are possible (at least for PicoScope), e.g. if the trigger is set at the end of an operation
+			"delay [s]": 0
+		},
+		"clock": {
+			"use_external": false, # activate the use of an external clock for alignment of measurements
+			"external clock frequency": 10e6, # clock frequency used for synchronization
+			"external clock threshold [V]": 100e-3 # threshold at which the edge of the clock is detected
+		},
+		# Keysight related - defined how the data is read back
+		"data_acquisition": {
+			"maximum blocksize": 10e6,
+			"maximum segments" : null
+		}
+	},
+	# LANGER ICS 105 - xyz table related
+	"table": {
+		"active": false, # enable/disable. ATTENTION - is the table is connected make really, really sure that you only enable if desired. Otherwise harm may be done to table, DUT, equipment and human mankind.
+		"xOrigin [mm]": 0, # start position on x-direction
+		"xLen [mm]": 0, # distance in x-direction
+		"yOrigin [mm]": 0, # start position on y-direction
+		"yLen [mm]": 0, # distance in y-direction
+		"zOrigin [mm]": 0, # start position on z-axis
+		"zRetractHeight [mm]": 0, # moves the table up to this value in between moving from one position to another to avoid damage to probes, i.e by touching peripherals. set to 'zOriginHeight [mm]' to not move. ;)
+		"resolution [mm]": 0 # step size in all directions (equidistance in x- and y-direction)
+	},
+	# define how measurements and data are stored in the HDF5
+	"HDF5": {
+		"output_file": "test.hdf5", # output file name used for storage
+		"output_file_addtimestring": true, # automacially append a time stamp with start value of the measurement
+		"store_for_all_repetitions": false, # store the datasets for each repetition (default: only store once, e.g. for ciphers where ptxt and ctxt are same), e.g. for PUF measurements where responses vary even for same challenge
+		"datasets": {
+			# define the different datasets stored. Creates array of size (n_traces x dim [x repetitions]) and datatype according to specification
+			"ptxt": {
+				"datatype": "uint8",
+				"dim": 16,
+				"create": false # only stored if set to true
+			},
+			"ctxt": {
+				"datatype": "uint8",
+				"dim": 16,
+				"create": false
+			},
+			"k": {
+				"datatype": "uint8",
+				"dim": 16,
+				"create": true
+			},
+			"iv": {
+				"datatype": "uint16",
+				"dim": 16,
+				"create": false
+			},
+			"adata": {
+				"datatype": "uint16",
+				"dim": 16,
+				"create": false
+			},
+			"samples":{
+				"datatype": "uint8",
+				"dim": null, # IMPORTANT: for measurements the dimension is calculated according to number of samples, i.e. sampling rate and duration --> set to null
+				"create": true,
+				"record channel": 1
+			},
+			"samples_power":{
+				"datatype": "uint8",
+				"dim": null,
+				"create": false,
+				"record channel": 2
+			},
+			"samples_trigger":{
+				"datatype": "uint8",
+				"dim": null,
+				"create": false,
+				"record channel": 4
+			}
+		},
+		# maps the outputs of the functions from the target module to the datatsets
+		# each of the functions is assumed to return a list of arrays. Mapping is done by specifying which list entry
+		# is mapped to which dataset (specified above)
+		"saving": {
+			# maps output of 'load_data'
+			"input_data":{
+			},
+			# maps output of 'execute_trigger'
+			"trigger_data":{
+				"0": "k" # e.g. takes the first output that results from trigger execution and stored into the 'k' dataset
+			},
+			# maps output of 'read_data''
+			"output_data":{
+			}
+		},
+		# store optional files into the documentary, e.g. README, pictures of setup, flowchart of FSM, picture of a nice cat
+		# or whatever else is needed for your future self to understand what the measurements are doing
+		# NOTE - the config file, target module (python file) and the binary are stored automatically
+		"documentation": {
+			"setup.jpg": "../../examples/setup.jpg"
+		}
+	},
+	# set the logger
+	"logging": {
+		"level": "info",
+		"file": "", # optional file, where the log is stored (does not provide output on console)
+		"logformat": "[%(module)30s]  %(levelname)10s \t %(asctime)s: %(message)s",
+		"e-mail address for notification": null # e-mail address for notification as soon as measurements are finished/aborted.
+	},
+	# optional entries that can be used in your experiment, e.g. masking order used, whether returned output should be
+	# checked, order of randomitation of inputs (e.g. for t-test), etc.
+	# This way you can use a single target moduler and use these entries as switches
+	"experiment": {
+		"_comment": "Optional arguments used by the target communication",
+		"check result": true
+	}
+}
