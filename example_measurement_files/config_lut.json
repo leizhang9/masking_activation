@@ -1,0 +1,133 @@
+{
+	"target":{
+		"board": "CW305",
+		"chip": "Artix 7",
+		"fclk [Hz]": 1e6,
+		"uart port": "/dev/ttyUSB1",
+		"uart baudrate [Baud]": 9216,
+		"uart bytesize": 8,
+		"uart parity": "E",
+		"uart stopbits": 1,
+		"description": "masked lut",
+		"binary" : "/storage/ge36cig/ma_zhang_masking_activation_functions_for_nns/example_measurement_files/top_64_new.bit"
+	},
+	"msmt": {
+		"number of traces": 1000000,
+		"repetitions": 1,
+		"delay [s]": 0.01
+	},
+	"scope": {
+		"type": "PicoScope 6",
+		"url": "",
+		"sampling": {
+			"sampling rate [S/s]": 1.25e9,
+			"sampling duration [s]": 35e-6
+		},
+		"channel1": {
+			"channel": 0,
+			"range [V]": 100e-3,
+			"coupling": "AC",
+			"BWLimited": false,
+			"enable": false,
+			"probe": "PA101 Probe",
+			"amplifier": "20 dB on-chip",
+			"position": "On-Chip SMA"
+		},
+		"channel2": {
+			"channel": 1,
+			"range [V]": 100e-3,
+			"coupling": "AC",
+			"BWLimited": false,
+			"enable": true,
+			"probe": "",
+			"amplifier": "",
+			"position": ""
+		},
+		"channel3": {
+			"channel": 2,
+			"range [V]": 500e-3,
+			"coupling": "DC",
+			"BWLimited": false,
+			"enable": false,
+			"probe": "PA101 Probe",
+			"amplifier": "None",
+			"position": "T14"
+		},
+		"channel4": {
+			"channel": 3,
+			"range [V]": 500e-3,
+			"coupling": "DC",
+			"BWLimited": false,
+			"enable": false,
+			"probe": "",
+			"amplifier": "",
+			"position": ""
+		},
+		"trigger": {
+			"channel": 3,
+			"range [V]": 500e-3,
+			"coupling": "DC",
+			"enable": true,
+			"threshold [V]": 0.1,
+			"direction": "Rising",
+			"timeout [s]": 10,
+			"delay [s]": 0
+		},
+		"clock": {
+			"use_external": true,
+			"external clock frequency": 10e6,
+      "external clock threshold [V]": 100e-3
+		}
+	},
+	"table": {
+		"xOrigin [mm]": 0,
+		"xLen [mm]": 0,
+		"yOrigin [mm]": 0,
+		"yLen [mm]": 0,
+		"zOrigin [mm]": 0,
+		"resolution [mm]": 0
+	},
+	"HDF5": {
+		"output_file": "/storage/ge36cig/ge36cig_64_1Mtraces.hdf5",
+		"output_file_addtimestring": true,
+		"store_for_all_repetitions": false,
+		"datasets": {
+			"input": {
+				"datatype": "uint32",
+				"dim": 1,
+				"create": true
+			},
+			"rnd" : {
+				"datatype": "uint32",
+				"dim": 1,
+				"create": true
+			},
+			"samples":{
+				"datatype": "uint8",
+				"dim": null,
+				"create": true,
+				"record channel": 1
+			}
+		},
+		"saving": {
+			"input_data":{
+				"0": "input",
+				"1": "rnd"
+			},
+			"trigger_data":{
+			},
+			"output_data":{
+			}
+
+		}
+	},
+	"logging": {
+		"level": "info",
+		"file": "",
+		"logformat": "[%(module)30s]  %(levelname)10s \t %(asctime)s: %(message)s"
+
+	},
+	"experiment": {
+		"n_data": 8
+	}
+}
